@@ -1168,15 +1168,6 @@ class Backtest:
 
                 # Next tick, a moment before bar close
                 strategy.next()
-            else:
-                # Close any remaining open trades so they produce some stats
-                for trade in broker.trades:
-                    trade.close()
-
-                # Re-run broker one last time to handle orders placed in the last strategy
-                # iteration. Use the same OHLC values as in the last broker iteration.
-                if start < len(self._data):
-                    try_(broker.next, exception=_OutOfMoneyError)
 
             # Set data back to full length
             # for future `indicator._opts['data'].index` calls to work
